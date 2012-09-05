@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="JFly"
+  id="myeclipse.1346830086921"
+  context-root="/JFly"
+  j2ee-spec="5.0"
+  archive="JFly.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+
