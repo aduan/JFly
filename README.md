@@ -1,4 +1,4 @@
 JFly
 ====
 
-JFly   JFinal框架的最好优化版本
+JFly JFinal框架完美优化版本

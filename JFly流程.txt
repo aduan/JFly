@@ -1,0 +1,18 @@
+我在这里简单介绍一下核心类的作用吧：
+1：JFinalFilter 框架入口，也是接管所有请求的地方
+
+2：ActionMapping 映射url至action
+
+3：ActionHandler 接管动态请求，控制 action + interceptor + render 执行流程
+
+4：ActionInvocation 执行interceptor + action
+
+5：Render 渲染视图
+
+6：ActiveRecord 数据库支持
+
+7：JFinalConfig 系统配置
+
+8：Validator 校验
+
+  看完这主要的八个类基本就读完了，建议楼主在JFinalFilter 中设置断点，调试完一次请求过程也就基本明白了系统的主要执行流程 :)

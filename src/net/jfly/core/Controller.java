@@ -11,12 +11,30 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * ¿ØÖÆÆ÷
+ * æ§åˆ¶å™¨
  */
+// requesté‡Œé¢å–å‡ºæ•°æ®å¹¶ä¸”å¯ä»¥è¿›è¡Œè½¬æ¢ç‰¹å®šçš„æ•°æ®ç±»å‹ï¼šBoolean,Byte,Short,Integer,Long,Float,Double
 public abstract class Controller {
-	// ÇëÇóÏìÓ¦
+	private static final String[] Null_Url_Param_Array = new String[0];
+	private static final String Url_Param_Separator = Config.getConstants().getUrlParamSeparator();
+
+	// è¯·æ±‚å“åº”
 	private HttpServletRequest request;
 	private HttpServletResponse response;
+	private String urlParam;
+	private String[] urlParamArray;
+
+	void init(HttpServletRequest request, HttpServletResponse response, String urlParam) {
+		this.request = request;
+		this.response = response;
+		// å°†åˆ†éš”ç¬¦ä¸€èµ·æ”¾å…¥urlParamä¸­
+		this.urlParam = urlParam;
+	}
+
+	public void setUrlPara(String urlParam) {
+		this.urlParam = urlParam;
+		this.urlParamArray = null;
+	}
 
 	void init(HttpServletRequest request, HttpServletResponse response) {
 		this.request = request;
@@ -31,7 +49,7 @@ public abstract class Controller {
 		return response;
 	}
 
-	// 1.request ÇëÇó²ÎÊı´¦Àí
+	// 1.request è¯·æ±‚å‚æ•°å¤„ç†
 	// ---------------------------------------Attribute---------------------------------------
 
 	public Controller setAttribute(String name, Object value) {
@@ -93,8 +111,8 @@ public abstract class Controller {
 		return result != null ? result : defaultValue;
 	}
 
-	// requestÀïÃæÈ¡³öÊı¾İ²¢ÇÒ¿ÉÒÔ½øĞĞ×ª»»ÌØ¶¨µÄÊı¾İÀàĞÍ£ºBoolean,Byte,Short,Integer,Long,Float,Double
-	// ~1:×ª»»ÎªBoolean
+	// requesté‡Œé¢å–å‡ºæ•°æ®å¹¶ä¸”å¯ä»¥è¿›è¡Œè½¬æ¢ç‰¹å®šçš„æ•°æ®ç±»å‹ï¼šBoolean,Byte,Short,Integer,Long,Float,Double
+	// ~1:è½¬æ¢ä¸ºBoolean
 	public Boolean getParameterToBoolean(String name) {
 		String result = getParameter(name);
 		if (result != null) {
@@ -121,7 +139,7 @@ public abstract class Controller {
 		return result;
 	}
 
-	// ~2:×ª»»ÎªByte[]
+	// ~2:è½¬æ¢ä¸ºByte[]
 	public byte[] getParameterToByteArray(String name) {
 		String result = getParameter(name);
 		return result != null ? result.getBytes() : null;
@@ -144,7 +162,7 @@ public abstract class Controller {
 		return result;
 	}
 
-	// ~3:×ª»»ÎªShort
+	// ~3:è½¬æ¢ä¸ºShort
 	public Short getParameterToShort(String name) {
 		String result = getParameter(name);
 		return result != null ? Short.parseShort(result) : null;
@@ -167,7 +185,7 @@ public abstract class Controller {
 		return result;
 	}
 
-	// ~4:×ª»»ÎªInteger
+	// ~4:è½¬æ¢ä¸ºInteger
 	public Integer getParameterToInt(String name) {
 		String result = getParameter(name);
 		return result != null ? Integer.parseInt(result) : null;
@@ -190,7 +208,7 @@ public abstract class Controller {
 		return result;
 	}
 
-	// ~5:×ª»»ÎªLong
+	// ~5:è½¬æ¢ä¸ºLong
 	public Long getParameterToLong(String name) {
 		String result = getParameter(name);
 		return result != null ? Long.parseLong(result) : null;
@@ -213,7 +231,7 @@ public abstract class Controller {
 		return result;
 	}
 
-	// ~6:×ª»»ÎªFloat
+	// ~6:è½¬æ¢ä¸ºFloat
 	public Float getParameterToFloat(String name) {
 		String result = getParameter(name);
 		return result != null ? Float.parseFloat(result) : null;
@@ -236,7 +254,7 @@ public abstract class Controller {
 		return result;
 	}
 
-	// ~7:×ª»»ÎªDouble
+	// ~7:è½¬æ¢ä¸ºDouble
 	public Double getParameterToDouble(String name) {
 		String result = getParameter(name);
 		return result != null ? Double.parseDouble(result) : null;
@@ -259,7 +277,7 @@ public abstract class Controller {
 		return result;
 	}
 
-	// ½«request ParameterMapÀïÃæµÄÊı¾İ±£Áô
+	// å°†request ParameterMapé‡Œé¢çš„æ•°æ®ä¿ç•™
 
 	@SuppressWarnings("unchecked")
 	public Controller keepParameter() {
@@ -289,7 +307,7 @@ public abstract class Controller {
 		return this;
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "rawtypes" })
 	public Controller keepParameter(String name, Class type) {
 		String[] values = request.getParameterValues(name);
 		if (values != null) {
@@ -305,7 +323,7 @@ public abstract class Controller {
 		return this;
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	public Controller keepParameter(Class type, String... names) {
 		if (type == String.class) {
 			return keepParameter(names);
@@ -318,6 +336,7 @@ public abstract class Controller {
 		return this;
 	}
 
+	// ~å­˜åœ¨ä¸å¦å’Œä¸ºç©ºåˆ¤æ–­
 	public boolean parameterIsBlank(String name) {
 		String value = request.getParameter(name);
 		return value == null || value.trim().length() == 0;
@@ -327,7 +346,7 @@ public abstract class Controller {
 		return request.getParameterMap().containsKey(paramName);
 	}
 
-	// 2.session´¦Àí
+	// 2.sessionå¤„ç†
 	public HttpSession getSession() {
 		return request.getSession();
 	}
@@ -338,13 +357,13 @@ public abstract class Controller {
 
 	@SuppressWarnings("unchecked")
 	public <T> T getSessionAttribute(String key) {
-		// ËµÃ÷£º´ÓsessionÒÀ¾İkey¶ÁÈ¡µÄÊ±ºò,±ØĞë±£Ö¤sessionÒ»¶¨´æÔÚ,·ñÔò²úÉú¿ÕÖ¸Õë´íÎó
+		// è¯´æ˜ï¼šä»sessionä¾æ®keyè¯»å–çš„æ—¶å€™,å¿…é¡»ä¿è¯sessionä¸€å®šå­˜åœ¨,å¦åˆ™äº§ç”Ÿç©ºæŒ‡é’ˆé”™è¯¯
 		HttpSession session = request.getSession(false);
 		return session != null ? (T) session.getAttribute(key) : null;
 	}
 
 	public Controller setSessionAttribute(String key, Object value) {
-		// java»úÖÆÄ¬ÈÏrequest.getSession()Èç¹û²»´æÔÚsessionÔò´´½¨session
+		// javaæœºåˆ¶é»˜è®¤request.getSession()å¦‚æœä¸å­˜åœ¨sessionåˆ™åˆ›å»ºsession
 		request.getSession().setAttribute(key, value);
 		return this;
 	}
@@ -357,7 +376,7 @@ public abstract class Controller {
 		return this;
 	}
 
-	// 2.cookie´¦Àí
+	// 3.cookieå¤„ç†
 	public Cookie getCookie(String name) {
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
@@ -389,7 +408,7 @@ public abstract class Controller {
 	}
 
 	/**
-	 * ²ÎÊımaxAgeInSeconds£º-1: µ±ä¯ÀÀÆ÷¹Ø±ÕÁ¢¼´¹Ø±Õcookie. 0:ÂíÉÏÇå³ıcookie. n>0:cookieÓĞĞ§´æ»îÊ±¼ä
+	 * å‚æ•°maxAgeInSecondsï¼š-1: å½“æµè§ˆå™¨å…³é—­ç«‹å³å…³é—­cookie. 0:é©¬ä¸Šæ¸…é™¤cookie. n>0:cookieæœ‰æ•ˆå­˜æ´»æ—¶é—´
 	 */
 	public Controller addCookie(String name, String value, int maxAgeInSeconds, String path) {
 		Cookie cookie = new Cookie(name, value);
@@ -421,6 +440,153 @@ public abstract class Controller {
 	public Controller removeCookie(String name) {
 		addCookie(name, null, 0, "/");
 		return this;
+	}
+
+	// 4:Urlå‚æ•°å¤„ç†
+	// ---------------------------------------urlParam---------------------------------------
+	// :è¯´æ˜ï¼šä¼ é€’è¿‡çš„åšåŸå§‹æ•°æ®,ä¸ºäº†å®‰å…¨ç€æƒ³ä¸èƒ½è®¾ç½®é»˜è®¤å€¼ï¼Œä¸èƒ½è®©æ²¡æœ‰å‚æ•°çš„è¯·æ±‚è¿›è¡Œä¸šåŠ¡å¤„ç†
+	public String getUrlParam() {
+		if ("".equals(urlParam)) {
+			// è¿™æ ·åšåªç”¨æ£€æŸ¥æ˜¯å¦ä¸ºnull,è€Œä¸ç”¨æ£€æŸ¥æ˜¯å¦ä¸º""
+			urlParam = null;
+		}
+		return urlParam;
+	}
+
+	public Boolean getUrlParamToBoolean() {
+		String result = getUrlParam();
+		return result != null ? Boolean.parseBoolean(result) : null;
+	}
+
+	public byte[] getUrlParamToByteArray() {
+		String result = getUrlParam();
+		return result != null ? result.getBytes() : null;
+	}
+
+	public Short getUrlParamToShort() {
+		String result = getUrlParam();
+		return result != null ? Short.parseShort(result) : null;
+	}
+
+	public Integer getUrlParamToInt() {
+		String result = getUrlParam();
+		return result != null ? Integer.parseInt(result) : null;
+	}
+
+	public Long getUrlParamToLong() {
+		String result = getUrlParam();
+		return result != null ? Long.parseLong(result) : null;
+	}
+
+	public Float getUrlParamToFloat() {
+		String result = getUrlParam();
+		return result != null ? Float.parseFloat(result) : null;
+	}
+
+	public Double getUrlParamToDouble() {
+		String result = getUrlParam();
+		return result != null ? Double.parseDouble(result) : null;
+	}
+
+	// ---------------------------------------urlParamArray---------------------------------------
+	public String getUrlParam(int index) {
+		if (index < 0) {
+			return getUrlParam();
+		}
+
+		if (urlParamArray == null) {
+			if (urlParam == null || "".equals(urlParam)) {
+				urlParamArray = Null_Url_Param_Array;
+			} else {
+				urlParamArray = urlParam.split(Url_Param_Separator);
+			}
+		}
+		return urlParamArray.length > index ? urlParamArray[index] : null;
+	}
+
+	public String getUrlParam(int index, String defaultValue) {
+		String result = getUrlParam(index);
+		return result != null && !"".equals(result) ? result : defaultValue;
+	}
+
+	public Boolean getUrlParamToBoolean(int index) {
+		String result = getUrlParam(index);
+		return result != null ? Boolean.parseBoolean(result) : null;
+	}
+
+	public Boolean getUrlParamToBoolean(int index, Boolean defaultValue) {
+		String result = getUrlParam(index);
+		return result != null ? Boolean.parseBoolean(result) : defaultValue;
+	}
+
+	public byte[] getUrlParamToByteArray(int index) {
+		String result = getUrlParam(index);
+		return result != null ? result.getBytes() : null;
+	}
+
+	public byte[] getUrlParamToByteArray(int index, Integer defaultValue) {
+		String result = getUrlParam(index);
+		return (byte[]) (result != null ? result.getBytes() : defaultValue);
+	}
+
+	public Short getUrlParamToShort(int index) {
+		String result = getUrlParam(index);
+		return result != null ? Short.parseShort(result) : null;
+	}
+
+	public Short getUrlParamToShort(int index, Short defaultValue) {
+		String result = getUrlParam(index);
+		return result != null ? Short.parseShort(result) : defaultValue;
+	}
+
+	public Integer getUrlParamToInt(int index) {
+		String result = getUrlParam(index);
+		return result != null ? Integer.parseInt(result) : null;
+	}
+
+	public Integer getUrlParamToInt(int index, Integer defaultValue) {
+		String result = getUrlParam(index);
+		return result != null ? Integer.parseInt(result) : defaultValue;
+	}
+
+	public Long getUrlParamToLong(int index) {
+		String result = getUrlParam(index);
+		return result != null ? Long.parseLong(result) : null;
+	}
+
+	public Long getUrlParamToLong(int index, Long defaultValue) {
+		String result = getUrlParam(index);
+		return result != null ? Long.parseLong(result) : defaultValue;
+	}
+
+	public Float getUrlParamToFloat(int index) {
+		String result = getUrlParam(index);
+		return result != null ? Float.parseFloat(result) : null;
+	}
+
+	public Float getUrlParamToFloat(int index, Float defaultValue) {
+		String result = getUrlParam(index);
+		return result != null ? Float.parseFloat(result) : defaultValue;
+	}
+
+	public Double getUrlParamToDouble(int index) {
+		String result = getUrlParam(index);
+		return result != null ? Double.parseDouble(result) : null;
+	}
+
+	public Double getUrlParamToDouble(int index, Double defaultValue) {
+		String result = getUrlParam(index);
+		return result != null ? Double.parseDouble(result) : defaultValue;
+	}
+
+	// ~å­˜åœ¨ä¸å¦å’Œä¸ºç©ºåˆ¤æ–­
+	public boolean urlParamIsBlank(int index) {
+		String value = getUrlParam(index);
+		return value == null || value.trim().length() == 0;
+	}
+
+	public boolean urlParamIsExists(int index) {
+		return getUrlParam(index) != null;
 	}
 
 }

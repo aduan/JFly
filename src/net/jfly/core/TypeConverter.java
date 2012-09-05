@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * ½«StringÀàĞÍµÄ×Ö·û´®×ª»»ÎªÆäËû×Ö·û´®
+ * å°†Stringç±»å‹çš„å­—ç¬¦ä¸²è½¬æ¢ä¸ºå…¶ä»–å­—ç¬¦ä¸²
  */
 public final class TypeConverter {
 	private static final int timeStampLength = "2012-12-31 24:59:59".length();
@@ -13,7 +13,7 @@ public final class TypeConverter {
 	private static final String datePattern = "yyyy-MM-dd";
 
 	public static final Object convert(String string, Class<?> clazz) throws ParseException {
-		// ±ØĞë¼ì²é´«Èë×Ö·û´®ÊÇ·ñÎªnull»òÕß""
+		// å¿…é¡»æ£€æŸ¥ä¼ å…¥å­—ç¬¦ä¸²æ˜¯å¦ä¸ºnullæˆ–è€…""
 		if (string == null) {
 			return null;
 		}
@@ -21,11 +21,11 @@ public final class TypeConverter {
 		if ("".equals(string)) {
 			return null;
 		}
-		// È»ºó¸ù¾İ´«ÈëµÄÀàĞÍ½øĞĞ×ª»»
+		// ç„¶åæ ¹æ®ä¼ å…¥çš„ç±»å‹è¿›è¡Œè½¬æ¢
 		if (clazz == String.class) {
 			return string;
 		}
-		// [1.¼¸ÖÖ»ù±¾ÀàĞÍ]
+		// [1.å‡ ç§åŸºæœ¬ç±»å‹]
 		if (clazz == Boolean.class) {
 			return Boolean.parseBoolean(string);
 		}
@@ -51,7 +51,7 @@ public final class TypeConverter {
 			return new java.math.BigDecimal(string);
 		}
 
-		// [2.ÈÕÆÚÀàĞÍ]
+		// [2.æ—¥æœŸç±»å‹]
 		if (clazz == java.util.Date.class) {
 			try {
 				if (string.length() >= timeStampLength) {
@@ -80,11 +80,11 @@ public final class TypeConverter {
 		if (clazz == java.sql.Timestamp.class) {
 			return java.sql.Timestamp.valueOf(string);
 		}
-		// 3.[Òì³£ĞÅÏ¢]
+		// 3.[å¼‚å¸¸ä¿¡æ¯]
 		if (Config.getConstants().isDevMode()) {
-			throw new RuntimeException("¿ª·¢Ä£Ê½ĞÅÏ¢:ÇëÌí¼ÓÊı¾İÀàĞÍ:" + clazz.getName() + "µ½×Ö·û´®×ª»»Àà" + TypeConverter.class + "ÖĞ");
+			throw new RuntimeException("å¼€å‘æ¨¡å¼ä¿¡æ¯:è¯·æ·»åŠ æ•°æ®ç±»å‹:" + clazz.getName() + "åˆ°å­—ç¬¦ä¸²è½¬æ¢ç±»" + TypeConverter.class + "ä¸­");
 		} else {
-			throw new RuntimeException(" ĞèÒª×ª»»µÄÀàĞÍ" + clazz.getName() + "²»ÄÜ´¦ÀíÇå´«ÈëÕıÈ·µÄ×ª»»ÀàĞÍ");
+			throw new RuntimeException(" éœ€è¦è½¬æ¢çš„ç±»å‹" + clazz.getName() + "ä¸èƒ½å¤„ç†æ¸…ä¼ å…¥æ­£ç¡®çš„è½¬æ¢ç±»å‹");
 		}
 
 	}

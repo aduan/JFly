@@ -1,15 +1,22 @@
 package net.jfly.config;
 
 /**
- * ¿ª·¢Õß³£Á¿ÉèÖÃ
+ * å¼€å‘è€…å¸¸é‡è®¾ç½®
  */
 public class Constants {
-	// ±¾Àà·ÖÎª¼¸¸ö²¿·Ö.
-	// 1:¿ò¼Ü¿ª·¢µ÷ÊÔ
+	// æœ¬ç±»åˆ†ä¸ºå‡ ä¸ªéƒ¨åˆ†.
+	// 1:æ¡†æ¶å¼€å‘è°ƒè¯•
 	private boolean devMode = false;
+	private String characterEncoding = "utf-8";
+	private boolean canScannerWebCodeAndData = true;
+	private boolean isShowErrorInfo = true;
+	private boolean isThrowErrorInfo = true;
+
+	// 2:æ¡†æ¶é…ç½®å¸¸é‡
+	private String urlParamSeparator = "-";
 
 	/**
-	 *ÉèÖÃ¿ª·¢Ä£Ê½ÆôÓÃÓë·ñ,±ãÓÚÔÚ¿ª·¢¹ı³ÌÖĞ¶ÔÏîÄ¿ÔËĞĞĞÅÏ¢µÄ´¦Àí
+	 * è®¾ç½®å¼€å‘æ¨¡å¼å¯ç”¨ä¸å¦,ä¾¿äºåœ¨å¼€å‘è¿‡ç¨‹ä¸­å¯¹é¡¹ç›®è¿è¡Œä¿¡æ¯çš„å¤„ç†
 	 */
 	public void setDevMode(boolean devMode) {
 		this.devMode = devMode;
@@ -17,6 +24,46 @@ public class Constants {
 
 	public boolean isDevMode() {
 		return devMode;
+	}
+
+	public void setUrlParamSeparator(String urlParamSeparator) {
+		this.urlParamSeparator = urlParamSeparator;
+	}
+
+	public String getUrlParamSeparator() {
+		return urlParamSeparator;
+	}
+
+	public String getCharacterEncoding() {
+		return characterEncoding;
+	}
+
+	public void setCharacterEncoding(String characterEncoding) {
+		this.characterEncoding = characterEncoding;
+	}
+
+	public boolean isCanScannerWebCodeAndData() {
+		return canScannerWebCodeAndData;
+	}
+
+	public void setCanScannerWebCodeAndData(boolean canScannerWebCodeAndData) {
+		this.canScannerWebCodeAndData = canScannerWebCodeAndData;
+	}
+
+	public boolean isShowErrorInfo() {
+		return isShowErrorInfo;
+	}
+
+	public void setShowErrorInfo(boolean isShowErrorInfo) {
+		this.isShowErrorInfo = isShowErrorInfo;
+	}
+
+	public boolean isThrowErrorInfo() {
+		return isThrowErrorInfo;
+	}
+
+	public void setThrowErrorInfo(boolean isThrowErrorInfo) {
+		this.isThrowErrorInfo = isThrowErrorInfo;
 	}
 
 }

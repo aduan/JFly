@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="melibrary.com.genuitec.eclipse.j2eedt.core.MYECLIPSE_JAVAEE_5_CONTAINER"/>
+	<classpathentry kind="lib" path="D:/JFly/lxy/lib/c3p0-0.9.1.2.jar"/>
+	<classpathentry kind="lib" path="D:/JFly/lxy/lib/jetty-server-6.1.26.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>

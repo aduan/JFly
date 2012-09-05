@@ -1,7 +1,7 @@
 package net.jfly.core;
 
 /**
- * ¿ò¼Ü³£Á¿ÉèÖÃ
+ * æ¡†æ¶å¸¸é‡è®¾ç½®
  * 
  */
 public class Constants {
